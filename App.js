@@ -7,14 +7,17 @@
  */
 
 import React from 'react';
-import {View} from 'react-native';
-
+import {View, Button} from 'react-native';
+import {Provider} from 'react-redux';
 import {Home} from './src/Home/Home';
+import {store} from './src/redux';
 
 export const App = () => {
   return (
-    <View style={{flex: 1}}>
-      <Home />
-    </View>
+    <Provider store={store}>
+      <View style={{flex: 1}}>
+        <Home />
+      </View>
+    </Provider>
   );
 };
