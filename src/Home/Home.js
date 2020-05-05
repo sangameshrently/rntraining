@@ -48,7 +48,10 @@ export const Home = () => {
           onPress={() => {
             dispatch({
               type: 'ADD',
-              payload: todo,
+              payload: {
+                name: todo,
+                status: false,
+              },
             });
             setTodo('');
           }}
@@ -66,16 +69,25 @@ export const Home = () => {
           return (
             <View
               style={{
-                borderColor: 'blue',
+                borderColor: item.status ? 'green' : 'blue',
                 height: 50,
                 width: '100%',
                 margin: 5,
                 padding: 5,
-                borderWidth: 1,
+                borderWidth: 2,
                 flexDirection: 'row',
                 borderRadius: 10,
               }}>
-              <Text> {item} </Text>
+              <Button
+                style={{alignSelf: 'flex-end'}}
+                title={item.name}
+                onPress={() => {
+                  dispatch({
+                    type: 'MARK',
+                    payload: index,
+                  });
+                }}
+              />
 
               <Button
                 style={{alignSelf: 'flex-end'}}

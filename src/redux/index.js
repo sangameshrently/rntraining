@@ -1,6 +1,15 @@
 import {createStore} from 'redux';
 
-let initialState = ['Eat', 'Sleep']; // I have no todos
+let initialState = [
+  {
+    name: 'Eat',
+    status: true,
+  },
+  {
+    name: 'Sleep',
+    status: false,
+  },
+]; // I have no todos
 
 const todoReducer = (state, action) => {
   switch (action.type) {
@@ -10,7 +19,7 @@ const todoReducer = (state, action) => {
 
       break;
 
-    case 'DELETE':
+    case 'DELETE': {
       let newState = state.filter((item, index) => {
         if (index === action.payload) {
           return false;
@@ -19,6 +28,17 @@ const todoReducer = (state, action) => {
         return true;
       });
       return newState;
+    }
+
+    case 'MARK': {
+      let newState = state.map((item, index) => {
+        if (index === action.payload) {
+          item.status = !item.status;
+        }
+        return item;
+      });
+      return newState;
+    }
   }
   return state;
 };
