@@ -51,6 +51,7 @@ store.subscribe(() => {
 
 console.log('initial Store State ', store.getState());
 
+// Store State => []
 // Data is setOf todos
 
 // todo
