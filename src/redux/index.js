@@ -1,6 +1,6 @@
 import {createStore} from 'redux';
 
-let initialState = []; // I have no todos
+let initialState = ['Eat', 'Sleep']; // I have no todos
 
 const todoReducer = (state, action) => {
   switch (action.type) {
@@ -11,8 +11,14 @@ const todoReducer = (state, action) => {
       break;
 
     case 'DELETE':
-      console.log('Delete Action');
-      break;
+      let newState = state.filter((item, index) => {
+        if (index === action.payload) {
+          return false;
+        }
+
+        return true;
+      });
+      return newState;
   }
   return state;
 };
@@ -41,3 +47,19 @@ console.log('initial Store State ', store.getState());
 // todos = [todo1, todo2]
 
 // Add todo, delete todo.
+
+// Store = [todos]
+
+/*
+
+store = {
+    todos:[],
+    login:[],
+    home:[],
+
+    useSelector((store) => {
+    return store.todos;
+  });
+}
+
+*/
