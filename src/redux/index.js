@@ -1,4 +1,5 @@
 import {createStore, compose, applyMiddleware} from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
 let initialState = [
   {
@@ -60,11 +61,19 @@ const myLogger = (store) => (next) => (action) => {
   next(action);
 };
 
+const sagaMiddleware = createSagaMiddleware();
+
 export const store = createStore(
   todoReducer,
   initialState,
-  compose(applyMiddleware(myLogger)),
+  compose(applyMiddleware(myLogger, sagaMiddleware)),
 );
+
+function* mySaga() {
+  yield console.log('My Saga Middlware2 ');
+}
+
+sagaMiddleware.run(mySaga);
 
 store.subscribe(() => {
   console.log('store changed ', store.getState());
