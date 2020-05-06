@@ -65,6 +65,26 @@ export const Home = () => {
             });
           }}
         />
+
+        <Button
+          style={{alignSelf: 'flex-end'}}
+          title="ADD_TODO"
+          onPress={() => {
+            dispatch({
+              type: 'ADD_TODO',
+            });
+          }}
+        />
+
+        <Button
+          style={{alignSelf: 'flex-end'}}
+          title="GET_TODO"
+          onPress={() => {
+            dispatch({
+              type: 'GET_TODO',
+            });
+          }}
+        />
         {store.map((item, index) => {
           return (
             <View

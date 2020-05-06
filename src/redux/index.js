@@ -1,5 +1,9 @@
 import {createStore, compose, applyMiddleware} from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import {call, put, all, takeEvery, takeLatest} from 'redux-saga/effects';
+import {bininds} from './sagas';
+
+// import {takeEvery} from 'redux-saga';
 
 let initialState = [
   {
@@ -70,7 +74,7 @@ export const store = createStore(
 );
 
 function* mySaga() {
-  yield console.log('My Saga Middlware2 ');
+  yield all([...bininds]);
 }
 
 sagaMiddleware.run(mySaga);
