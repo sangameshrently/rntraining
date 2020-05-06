@@ -1,4 +1,4 @@
-import {createStore} from 'redux';
+import {createStore, compose, applyMiddleware} from 'redux';
 
 let initialState = [
   {
@@ -43,7 +43,28 @@ const todoReducer = (state, action) => {
   return state;
 };
 
-export const store = createStore(todoReducer, initialState);
+function logger(store) {
+  // Must point to the function returned by the previous middleware:
+  const next = store.dispatch;
+
+  return function dispatchAndLog(action) {
+    console.log('dispatching', action);
+    let result = next(action);
+    console.log('next state', store.getState());
+    return result;
+  };
+}
+
+const myLogger = (store) => (next) => (action) => {
+  console.log('this action is dispatched', action);
+  next(action);
+};
+
+export const store = createStore(
+  todoReducer,
+  initialState,
+  compose(applyMiddleware(myLogger)),
+);
 
 store.subscribe(() => {
   console.log('store changed ', store.getState());
