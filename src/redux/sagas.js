@@ -1,19 +1,40 @@
 import {call, put, takeEvery, takeLatest} from 'redux-saga/effects';
 
-function* addTodoSaga() {
-  console.log('My Saga addTodoSaga ');
+function* addTodoSaga(action) {
+  let todo = action.payload;
+  yield fetch('http://localhost:4000/todos', {
+    method: 'POST',
+    headers: {'content-type': 'application/json'},
+    body: JSON.stringify(todo),
+  });
+  yield call(getTodosSaga);
 }
 
-function* deleteTodoSaga() {
-  console.log('My Saga deleteTodoSaga ');
+function* deleteTodoSaga(action) {
+  let todo = action.payload;
+  yield fetch('http://localhost:4000/todos', {
+    method: 'DELETE',
+    headers: {'content-type': 'application/json'},
+    body: JSON.stringify(todo),
+  });
+  yield call(getTodosSaga);
 }
 
-function* updateTodoSaga() {
-  console.log('My Saga updateTodoSaga ');
+function* updateTodoSaga(action) {
+  let todo = action.payload;
+  yield fetch('http://localhost:4000/todos', {
+    method: 'PUT',
+    headers: {'content-type': 'application/json'},
+    body: JSON.stringify(todo),
+  });
+  yield call(getTodosSaga);
 }
 
 function* getTodosSaga() {
-  console.log('My Saga getTodosSaga ');
+  let result = yield fetch('http://localhost:4000/todos');
+  let respone = yield result.json();
+  yield put({type: 'STORE_TODOS', payload: respone});
+  console.log('result', respone);
 }
 
 export const bininds = [

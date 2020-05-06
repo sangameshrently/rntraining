@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   TextInput,
@@ -22,8 +22,14 @@ export const Home = () => {
   const store = useSelector((store) => {
     return store;
   });
+
   console.log('store in comp', store);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({type: 'GET_TODO'});
+  }, [dispatch]);
+
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
@@ -47,32 +53,13 @@ export const Home = () => {
           title="ADD"
           onPress={() => {
             dispatch({
-              type: 'ADD',
+              type: 'ADD_TODO',
               payload: {
                 name: todo,
                 status: false,
               },
             });
             setTodo('');
-          }}
-        />
-
-        <Button
-          title="DELETE"
-          onPress={() => {
-            dispatch({
-              type: 'DELETE',
-            });
-          }}
-        />
-
-        <Button
-          style={{alignSelf: 'flex-end'}}
-          title="ADD_TODO"
-          onPress={() => {
-            dispatch({
-              type: 'ADD_TODO',
-            });
           }}
         />
 
@@ -103,8 +90,11 @@ export const Home = () => {
                 title={item.name}
                 onPress={() => {
                   dispatch({
-                    type: 'MARK',
-                    payload: index,
+                    type: 'PUT_TODO',
+                    payload: {
+                      ...item,
+                      status: !item.status,
+                    },
                   });
                 }}
               />
@@ -114,8 +104,8 @@ export const Home = () => {
                 title="DELETE"
                 onPress={() => {
                   dispatch({
-                    type: 'DELETE',
-                    payload: index,
+                    type: 'DELETE_TODO',
+                    payload: item,
                   });
                 }}
               />

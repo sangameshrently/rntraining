@@ -18,32 +18,8 @@ let initialState = [
 
 const todoReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD':
-      state.push(action.payload);
-      //   console.log('Add Action payload', action.payload);
-
-      break;
-
-    case 'DELETE': {
-      let newState = state.filter((item, index) => {
-        if (index === action.payload) {
-          return false;
-        }
-
-        return true;
-      });
-      return newState;
-    }
-
-    case 'MARK': {
-      let newState = state.map((item, index) => {
-        if (index === action.payload) {
-          item.status = !item.status;
-        }
-        return item;
-      });
-      return newState;
-    }
+    case 'STORE_TODOS':
+      return action.payload;
   }
   return state;
 };
