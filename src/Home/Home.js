@@ -21,12 +21,27 @@ import {
   addTodoAction,
   putTodoAction,
   removeTodoAction,
+  storeFilterStatusAction,
 } from '../redux/actions';
+
+export const filterTodos = (store) => {
+  switch (store.filter) {
+    case 'ALL': {
+      return store.todos;
+    }
+    case 'COMPLETED': {
+      return store.todos.filter((todo) => todo.status == true);
+    }
+    case 'PENDING': {
+      return store.todos.filter((todo) => todo.status == false);
+    }
+  }
+};
 
 export const Home = () => {
   const [todo, setTodo] = useState('');
   const store = useSelector((store) => {
-    return store;
+    return filterTodos(store);
   });
 
   console.log('store in comp', store);
@@ -70,11 +85,28 @@ export const Home = () => {
 
         <Button
           style={{alignSelf: 'flex-end'}}
-          title="GET_TODO"
+          title="ALL"
           onPress={() => {
-            dispatch(getTodoAction());
+            dispatch(storeFilterStatusAction('ALL'));
           }}
         />
+
+        <Button
+          style={{alignSelf: 'flex-end'}}
+          title="COMPLETED"
+          onPress={() => {
+            dispatch(storeFilterStatusAction('COMPLETED'));
+          }}
+        />
+
+        <Button
+          style={{alignSelf: 'flex-end'}}
+          title="PENDIND"
+          onPress={() => {
+            dispatch(storeFilterStatusAction('PENDING'));
+          }}
+        />
+
         {store.map((item, index) => {
           return (
             <View

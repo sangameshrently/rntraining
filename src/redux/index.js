@@ -6,16 +6,30 @@ import {todoReducer} from './reducer';
 
 // import {takeEvery} from 'redux-saga';
 
-let initialState = [
-  {
-    name: 'Eat',
-    status: true,
-  },
-  {
-    name: 'Sleep',
-    status: false,
-  },
-]; // I have no todos
+// let initialState = [
+//   {
+//     name: 'Eat',
+//     status: true,
+//   },
+//   {
+//     name: 'Sleep',
+//     status: false,
+//   },
+// ]; // I have no todos
+
+let initialState = {
+  filter: 'ALL',
+  todos: [
+    {
+      name: 'Eat',
+      status: true,
+    },
+    {
+      name: 'Sleep',
+      status: false,
+    },
+  ],
+};
 
 function logger(store) {
   // Must point to the function returned by the previous middleware:

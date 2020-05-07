@@ -14,6 +14,10 @@ export const putTodoAction = (payload) => {
   return {type: 'PUT_TODO', payload: payload};
 };
 
+export const storeFilterStatusAction = (payload) => {
+  return {type: 'STORE_FILTER_STATUS', payload: payload};
+};
+
 export const getActionType = (action) => {
   return action().type;
 };
