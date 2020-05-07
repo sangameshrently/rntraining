@@ -23,26 +23,11 @@ import {
   removeTodoAction,
   storeFilterStatusAction,
 } from '../redux/actions';
-
-export const filterTodos = (store) => {
-  switch (store.filter) {
-    case 'ALL': {
-      return store.todos;
-    }
-    case 'COMPLETED': {
-      return store.todos.filter((todo) => todo.status == true);
-    }
-    case 'PENDING': {
-      return store.todos.filter((todo) => todo.status == false);
-    }
-  }
-};
+import {getFilteredTodos} from '../redux/selectors';
 
 export const Home = () => {
   const [todo, setTodo] = useState('');
-  const store = useSelector((store) => {
-    return filterTodos(store);
-  });
+  const store = useSelector(getFilteredTodos);
 
   console.log('store in comp', store);
   const dispatch = useDispatch();
@@ -83,6 +68,13 @@ export const Home = () => {
           }}
         />
 
+        <Button
+          style={{alignSelf: 'flex-end'}}
+          title="DUMMY"
+          onPress={() => {
+            dispatch({type: 'dummy'});
+          }}
+        />
         <Button
           style={{alignSelf: 'flex-end'}}
           title="ALL"
