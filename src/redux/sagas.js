@@ -1,4 +1,11 @@
 import {call, put, takeEvery, takeLatest} from 'redux-saga/effects';
+import {
+  getActionType,
+  addTodoAction,
+  removeTodoAction,
+  getTodoAction,
+  putTodoAction,
+} from './actions';
 
 function* addTodoSaga(action) {
   let todo = action.payload;
@@ -38,8 +45,8 @@ function* getTodosSaga() {
 }
 
 export const bininds = [
-  takeEvery('ADD_TODO', addTodoSaga),
-  takeEvery('DELETE_TODO', deleteTodoSaga),
-  takeEvery('GET_TODO', getTodosSaga),
-  takeEvery('PUT_TODO', updateTodoSaga),
+  takeEvery(getActionType(addTodoAction), addTodoSaga),
+  takeEvery(getActionType(removeTodoAction), deleteTodoSaga),
+  takeEvery(getActionType(getTodoAction), getTodosSaga),
+  takeEvery(getActionType(putTodoAction), updateTodoSaga),
 ];

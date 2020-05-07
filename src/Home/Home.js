@@ -16,6 +16,12 @@ import {
   View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {
+  getTodoAction,
+  addTodoAction,
+  putTodoAction,
+  removeTodoAction,
+} from '../redux/actions';
 
 export const Home = () => {
   const [todo, setTodo] = useState('');
@@ -27,7 +33,7 @@ export const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({type: 'GET_TODO'});
+    dispatch(getTodoAction());
   }, [dispatch]);
 
   return (
@@ -52,13 +58,12 @@ export const Home = () => {
         <Button
           title="ADD"
           onPress={() => {
-            dispatch({
-              type: 'ADD_TODO',
-              payload: {
+            dispatch(
+              addTodoAction({
                 name: todo,
                 status: false,
-              },
-            });
+              }),
+            );
             setTodo('');
           }}
         />
@@ -67,9 +72,7 @@ export const Home = () => {
           style={{alignSelf: 'flex-end'}}
           title="GET_TODO"
           onPress={() => {
-            dispatch({
-              type: 'GET_TODO',
-            });
+            dispatch(getTodoAction());
           }}
         />
         {store.map((item, index) => {
@@ -89,13 +92,12 @@ export const Home = () => {
                 style={{alignSelf: 'flex-end'}}
                 title={item.name}
                 onPress={() => {
-                  dispatch({
-                    type: 'PUT_TODO',
-                    payload: {
+                  dispatch(
+                    putTodoAction({
                       ...item,
                       status: !item.status,
-                    },
-                  });
+                    }),
+                  );
                 }}
               />
 
@@ -103,10 +105,7 @@ export const Home = () => {
                 style={{alignSelf: 'flex-end'}}
                 title="DELETE"
                 onPress={() => {
-                  dispatch({
-                    type: 'DELETE_TODO',
-                    payload: item,
-                  });
+                  dispatch(removeTodoAction(item));
                 }}
               />
             </View>

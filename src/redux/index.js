@@ -2,6 +2,7 @@ import {createStore, compose, applyMiddleware} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {call, put, all, takeEvery, takeLatest} from 'redux-saga/effects';
 import {bininds} from './sagas';
+import {todoReducer} from './reducer';
 
 // import {takeEvery} from 'redux-saga';
 
@@ -15,14 +16,6 @@ let initialState = [
     status: false,
   },
 ]; // I have no todos
-
-const todoReducer = (state, action) => {
-  switch (action.type) {
-    case 'STORE_TODOS':
-      return action.payload;
-  }
-  return state;
-};
 
 function logger(store) {
   // Must point to the function returned by the previous middleware:
